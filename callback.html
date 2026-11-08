@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retour vers Business OS</title><link rel="stylesheet" href="style.css"></head>
+<body><main><div class="card">
+<h1>Retour vers Business OS…</h1>
+<p>Cette page renvoie l'autorisation TikTok vers l'outil installé sur ton ordinateur. Elle n'enregistre rien.</p>
+<p id="manual" hidden>Si rien ne se passe, copie cette adresse et colle-la dans Business OS (TikTok &gt; « La page de retour ne revient pas »)&nbsp;:
+<br><code id="url"></code><br><br><button id="copy" type="button">Copier l'adresse</button></p>
+</div></main>
+<script>
+  // Relais : TikTok exige une adresse https ; l'OS écoute en local (http://127.0.0.1:8765). Le code seul ne sert à rien
+  // sans le client secret, qui ne quitte jamais l'ordinateur.
+  var q = location.search;
+  document.getElementById("url").textContent = location.href;
+  document.getElementById("copy").onclick = function () { navigator.clipboard.writeText(location.href); };
+  setTimeout(function () { document.getElementById("manual").hidden = false; }, 2500);
+  if (/[?&](code|error)=/.test(q)) location.replace("http://127.0.0.1:8765/api/tiktok/callback" + q);
+</script>
+</body></html>
